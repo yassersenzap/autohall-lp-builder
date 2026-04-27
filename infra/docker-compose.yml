@@ -1,0 +1,21 @@
+services:
+  database:
+    image: postgres:16-alpine
+    container_name: ah-lp-builder-db
+    restart: always
+    environment:
+      POSTGRES_USER: ah_admin_lp
+      POSTGRES_PASSWORD: AH_Secure_Vault_2026!
+      POSTGRES_DB: ah_lp_builder_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ah_lp_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ah_admin_lp -d ah_lp_builder_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  ah_lp_data:
