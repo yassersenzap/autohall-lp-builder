@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import api from './api/axiosConfig'
+import PageCard from './components/PageCard'
 
 function App() {
-  const [data, setData] = useState(null)
+  const [pages, setPages] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     api.get('/landing-pages')
       .then(res => {
-        setData(res.data)
+        setPages(res.data)
         setLoading(false)
       })
       .catch(err => {
@@ -18,19 +19,41 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#0f172a] flex items-center justify-center p-6 text-slate-800">
-      <div className="bg-white p-8 rounded-3xl shadow-2xl border-t-4 border-blue-600 max-w-sm w-full text-center">
-        <h1 className="text-3xl font-black mb-2">Auto Hall</h1>
-        <p className="text-slate-500 font-medium italic mb-6">Status de la liaison</p>
-        
-        <div className={`py-2 px-4 rounded-full font-bold text-sm inline-block mb-4 ${data ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-          {loading ? "Connexion en cours..." : data ? "Backend Connecté ✅" : "Vérifie ton Java ⚠️"}
-        </div>
-
-        <div className="text-left bg-slate-50 p-4 rounded-xl font-mono text-xs text-slate-400 overflow-auto max-h-32">
-          {data ? JSON.stringify(data) : "En attente de données..."}
-        </div>
+    <div className="min-h-screen bg-[#0a0a0a] p-8">
+      {/* Header */}
+      <div className="max-w-7xl mx-auto mb-12">
+        <h1 className="text-4xl font-black text-white mb-2 tracking-tight">
+          Auto Hall
+        </h1>
+        <p className="text-slate-400 text-lg font-medium">
+          Construction de Landing Pages • {pages.length} page{pages.length !== 1 ? 's' : ''} créée{pages.length !== 1 ? 's' : ''}
+        </p>
       </div>
+
+      {/* Contenu principal */}
+      {loading ? (
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-slate-400 text-sm">Chargement des landing pages...</p>
+          </div>
+        </div>
+      ) : pages.length === 0 ? (
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center p-12 bg-white/5 rounded-3xl border border-white/10 max-w-md">
+            <p className="text-slate-300 text-xl font-medium mb-2">Aucune landing page</p>
+            <p className="text-slate-500">Créez votre première page pour commencer.</p>
+          </div>
+        </div>
+      ) : (
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {pages.map(page => (
+              <PageCard key={page.id} page={page} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
