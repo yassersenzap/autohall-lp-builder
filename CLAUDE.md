@@ -36,7 +36,8 @@ Modern React stack:
 - **Animations**: Framer Motion v12
 - **Icons**: lucide-react
 - **Linting**: ESLint with React hooks and Vite refresh rules
-- **Components**: `src/components/` for reusable UI; `PageCard.jsx` implements Porsche/Lando Norris dark aesthetic
+- **Components**: `src/components/` for reusable UI; `PageCard.jsx` implements dark aesthetic; `CreatePageDrawer.jsx` handles page creation
+- **Routing**: `react-router-dom` for navigation between Dashboard (`/`) and Builder (`/builder/:id`)
 
 ### Data Model
 
@@ -252,6 +253,8 @@ volumes:
 | POST   | `/`             | Create or update                | `{title, slug, description?, status?, content?}` |
 | DELETE | `/{id}`         | Delete page                     | None                            |
 
+**Implemented features**: Full CRUD operations, including delete functionality from dashboard.
+
 **Response codes**:
 - 200 OK for GET
 - 201 Created for POST
@@ -316,8 +319,10 @@ Frontend `PageCard` component currently expects `hero_image` and `price` keys.
 - Consider using environment variables for DB credentials (Spring `@Value` or `application.yml` with placeholders)
 - Add integration tests for controller layer (`@WebMvcTest`)
 - Add frontend testing (Vitest + RTL)
-- Implement frontend forms for creating/editing landing pages
+- Implement frontend forms for creating/editing landing pages (create drawer exists; needs full builder UI)
+- Builder.jsx is a placeholder - implement visual editor with component-based page builder
 - Consider separate microservice for image uploads/CDN integration
+- Add slug uniqueness validation to prevent duplicate constraint violations
 - Add rate limiting on API
 - Add request logging with MDC for tracing
 - Set up CI/CD pipeline (GitHub Actions)
@@ -327,10 +332,12 @@ Frontend `PageCard` component currently expects `hero_image` and `price` keys.
 - Backend: `backend/src/main/resources/application.properties` (config), `backend/pom.xml` (dependencies)
 - Frontend: `frontend/package.json` (scripts), `frontend/vite.config.js` (build config), `frontend/tailwind.config.js` (styling)
 - Docker: `infra/docker-compose.yml` (PostgreSQL service)
-- API: `backend/src/main/java/com/autohall/lpbuilderapi/controllers/LandingPageController.java`
+- API Controller: `backend/src/main/java/com/autohall/lpbuilderapi/controllers/LandingPageController.java`
 - Entity: `backend/src/main/java/com/autohall/lpbuilderapi/entities/LandingPage.java`
 - Service: `backend/src/main/java/com/autohall/lpbuilderapi/services/LandingPageService.java`
 - Repository: `backend/src/main/java/com/autohall/lpbuilderapi/repositories/LandingPageRepository.java`
+- Frontend App: `frontend/src/App.jsx` (dashboard with CRUD), `frontend/src/Builder.jsx` (placeholder for visual editor)
+- Axios client: `frontend/src/api/axiosConfig.js` (baseURL configuration)
 - Axios config: `frontend/src/api/axiosConfig.js`
 - Main frontend: `frontend/src/App.jsx` (grid of PageCards)
 
@@ -345,4 +352,4 @@ Frontend `PageCard` component currently expects `hero_image` and `price` keys.
 ---
 
 **Last updated**: 2026-04-29 (current branch: `feature/dashboard-data`)  
-**Technology versions**: Spring Boot 3.5.14, Java 21, React 19, Vite 8, Tailwind v4, PostgreSQL 16, Framer Motion 12
+**Technology versions**: Spring Boot 3.5.14, Java 21, React 19, Vite 8, Tailwind v4, PostgreSQL 16, Framer Motion 12, react-router-dom 7.14.2
