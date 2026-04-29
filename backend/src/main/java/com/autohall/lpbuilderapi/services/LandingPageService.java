@@ -34,7 +34,7 @@ public class LandingPageService {
 
     /**
      * Récupère une page par son slug (URL). 
-     * C'est ce que ton React appellera pour afficher la page au public.
+     * C'est ce que React appellera pour afficher la page au public.
      */
     public Optional<LandingPage> getPageBySlug(String slug) {
         return landingPageRepository.findBySlug(slug);

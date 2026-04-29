@@ -55,3 +55,4 @@ pnpm-debug.log*
 **/Thumbs.db
 **/ehthumbs.db
 **/$RECYCLE.BIN/
+**/frontend/.vite/
