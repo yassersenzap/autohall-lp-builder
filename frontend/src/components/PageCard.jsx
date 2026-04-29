@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Eye } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { MapPin, Clock, Eye, Trash2 } from 'lucide-react';
 
-const PageCard = ({ page }) => {
+const PageCard = ({ page, onDelete }) => {
+  const navigate = useNavigate();
   const { id, title, slug, status, content } = page;
 
   // Extraction des données du content (peut contenir hero_image et price)
@@ -49,6 +51,24 @@ const PageCard = ({ page }) => {
             </span>
           </div>
         )}
+
+        {/* Action Bar - visible au survol */}
+        <div className="absolute bottom-4 left-4 right-4 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button
+            onClick={() => navigate(`/builder/${id}`)}
+            className="p-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-blue-600 hover:border-blue-500 transition-colors"
+            aria-label="Éditer"
+          >
+            <Eye size={16} />
+          </button>
+          <button
+            onClick={() => onDelete(id)}
+            className="p-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-red-600 hover:border-red-500 transition-colors"
+            aria-label="Supprimer"
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
       </div>
 
       {/* Contenu texte */}

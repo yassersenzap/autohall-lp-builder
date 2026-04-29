@@ -28,6 +28,21 @@ function App() {
     fetchPages()
   }
 
+  const handleDelete = (id) => {
+    if (!window.confirm('Supprimer cette page ? Cette action est irréversible.')) {
+      return
+    }
+
+    api.delete(`/landing-pages/${id}`)
+      .then(() => {
+        fetchPages()
+      })
+      .catch(err => {
+        console.error("Erreur lors de la suppression :", err)
+        alert("Erreur lors de la suppression")
+      })
+  }
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] p-8">
       {/* Header */}
@@ -68,7 +83,7 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {pages.map(page => (
-              <PageCard key={page.id} page={page} />
+              <PageCard key={page.id} page={page} onDelete={handleDelete} />
             ))}
           </div>
         </div>
