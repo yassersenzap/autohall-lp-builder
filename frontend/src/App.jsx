@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import api from './api/axiosConfig'
 import PageCard from './components/PageCard'
+import CreatePageDrawer from './components/CreatePageDrawer'
 
 function App() {
   const [pages, setPages] = useState([])
   const [loading, setLoading] = useState(true)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
-  useEffect(() => {
+  const fetchPages = () => {
     api.get('/landing-pages')
       .then(res => {
         setPages(res.data)
@@ -16,18 +18,35 @@ function App() {
         console.error("Erreur de connexion :", err)
         setLoading(false)
       })
+  }
+
+  useEffect(() => {
+    fetchPages()
   }, [])
+
+  const handlePageCreated = () => {
+    fetchPages()
+  }
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] p-8">
       {/* Header */}
-      <div className="max-w-7xl mx-auto mb-12">
-        <h1 className="text-4xl font-black text-white mb-2 tracking-tight">
-          Auto Hall
-        </h1>
-        <p className="text-slate-400 text-lg font-medium">
-          Construction de Landing Pages • {pages.length} page{pages.length !== 1 ? 's' : ''} créée{pages.length !== 1 ? 's' : ''}
-        </p>
+      <div className="max-w-7xl mx-auto mb-12 flex items-center justify-between">
+        <div>
+          <h1 className="text-4xl font-black text-white mb-2 tracking-tight">
+            Auto Hall
+          </h1>
+          <p className="text-slate-400 text-lg font-medium">
+            Construction de Landing Pages • {pages.length} page{pages.length !== 1 ? 's' : ''} créée{pages.length !== 1 ? 's' : ''}
+          </p>
+        </div>
+        <button
+          onClick={() => setIsDrawerOpen(true)}
+          className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-blue-500/25"
+        >
+          <span className="text-xl">+</span>
+          NEW PAGE
+        </button>
       </div>
 
       {/* Contenu principal */}
@@ -54,6 +73,13 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* Create Page Drawer */}
+      <CreatePageDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        onPageCreated={handlePageCreated}
+      />
     </div>
   )
 }
