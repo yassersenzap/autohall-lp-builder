@@ -56,3 +56,6 @@ pnpm-debug.log*
 **/ehthumbs.db
 **/$RECYCLE.BIN/
 **/frontend/.vite/
+
+# AI Agents context files
+CLAUDE.md
