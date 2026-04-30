@@ -1,61 +1,44 @@
-# =========================
-# Backend (Java/Spring Boot/Maven)
-# =========================
-**/target/
-**/.mvn/
-**/*.class
-**/*.jar
-**/*.war
-**/*.ear
-**/*.log
-hs_err_pid*
+# Backend (Spring Boot / Maven)
+backend/target/
 
-# =========================
-# Frontend (React/Vite/Node)
-# =========================
-**/node_modules/
-**/dist/
-**/build/
+# Frontend (React / Vite)
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-.pnpm-store
+lerna-debug.log*
 
-# =========================
-# Security / Secrets
-# =========================
-**/.env
-**/.env.*
-**/*.pem
-**/credentials.json
-**/secret*
-**/application-local.properties
-**/application-local.yml
+# Environment files
+.env
+.env.*
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+infra/.env
+infra/.env.*
 
-# =========================
-# IDEs and Editors
-# =========================
-**/.idea/
-**/.vscode/
-**/*.swp
-**/*.swo
-**/*.iml
-**/*.sublime-workspace
-**/.settings/
-**/.project
-**/.classpath
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# =========================
-# OS / System Files
-# =========================
-**/.DS_Store
-**/.DS_Store?
-**/._*
-**/Thumbs.db
-**/ehthumbs.db
-**/$RECYCLE.BIN/
-**/frontend/.vite/
+# OS / system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
 
-# AI Agents context files
+# AI agent files
 CLAUDE.md
