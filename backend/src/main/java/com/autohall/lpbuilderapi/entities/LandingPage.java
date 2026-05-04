@@ -22,20 +22,22 @@ public class LandingPage {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 160)
     private String title;
 
-    @Column(unique = true, nullable = false)
-    private String slug; // L'URL de la page (ex: ford-fiesta-promo)
+    @Column(unique = true, nullable = false, length = 120)
+    private String slug;
 
+    @Column(length = 500)
     private String description;
 
     @Builder.Default
-    private String status = "DRAFT"; // DRAFT, PUBLISHED, ARCHIVED
+    @Column(nullable = false, length = 20)
+    private String status = "DRAFT";
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Map<String, Object> content; // Le "cerveau" visuel : contient les blocs, styles, images
+    private Map<String, Object> content;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -43,8 +45,6 @@ public class LandingPage {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // --- Hooks d'audit automatique ---
-    
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
